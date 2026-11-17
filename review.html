@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Review — Grid Extreme Risk Toolkit (GERT)</title>
+<meta name="description" content="Frozen evaluation of ercot-delta-quantile-v1.4. Q90, Q95, and Q99 missed a predeclared 0.03 absolute coverage error.">
+<meta name="author" content="Dresden Goehner">
+<link rel="canonical" href="https://gertgrid.space/review">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<meta property="og:title" content="Review — Grid Extreme Risk Toolkit (GERT)">
+<meta property="og:description" content="Frozen evaluation of ercot-delta-quantile-v1.4. Q90, Q95, and Q99 missed a predeclared 0.03 absolute coverage error.">
+<meta property="og:image" content="https://gertgrid.space/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Grid Extreme Risk Toolkit (GERT): the v1.4 candidate failed its predeclared calibration gate.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Review — Grid Extreme Risk Toolkit (GERT)">
+<meta name="twitter:description" content="Frozen evaluation of ercot-delta-quantile-v1.4. Q90, Q95, and Q99 missed a predeclared 0.03 absolute coverage error.">
+<meta name="twitter:image" content="https://gertgrid.space/og.png">
+<link rel="stylesheet" href="/assets/site.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Grid Extreme Risk Toolkit (GERT)","applicationCategory":"ScientificApplication","operatingSystem":"Web","url":"https://gertgrid.space","codeRepository":"https://github.com/DresdenGman/Grid-Extreme-Risk-Toolkit-GERT-","identifier":"https://doi.org/10.5281/zenodo.23982226","description":"Evidence-first research software for ERCOT tail-risk questions. The v1.4 candidate is rejected for production inference.","author":{"@type":"Person","name":"Dresden Goehner"}}</script>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<div class="frame">
+<header class="site"><div class="wrap">
+  <div class="brand">
+    <a class="name" href="/">Grid Extreme Risk Toolkit (GERT)</a>
+    <small>Research record, not a live dispatch tool</small>
+  </div>
+  <nav class="primary" aria-label="Primary"><a href="/">Record</a>
+<a href="/history">Historical Lab</a>
+<a href="/review" aria-current="page">Review</a>
+<a href="/benchmark">Benchmarks</a>
+<a href="/events/polar-vortex">Event Replay</a>
+<a href="/scenario">Scenario</a>
+<a href="/research">Research</a>
+<a href="/about">About</a></nav>
+</div></header>
+<main id="content" class="wrap">
+
+<p class="kicker">Rejection record</p>
+<h1>ercot-delta-quantile-v1.4 is not authorized.</h1>
+<p class="lede">The candidate is a one-hour-ahead load-change quantile model. Parameters were frozen before the final window, 2026-08-21T00:00:00Z through 2026-08-24T23:00:00Z. Three calibration gates failed. The threshold was not relaxed after the miss.</p>
+
+<div class="scroll" tabindex="0">
+<table>
+<caption class="note">Frozen 96-hour window, 2026-08-21 through 2026-08-24. Q50 mean absolute error 404.535 MW. Quantile crossings: 0. Published 2026-08-30.</caption>
+<thead><tr><th>Quantile</th><th>Target coverage</th><th>Empirical coverage</th><th>Absolute error</th><th>Pinball skill</th><th>Calibration gate</th></tr></thead>
+<tbody>
+<tr><td>P50</td><td>0.50</td><td>0.520833</td><td>0.020833</td><td>+0.841492</td><td><span class="pass-text">Pass</span></td></tr>
+<tr><td>P90</td><td>0.90</td><td>0.864583</td><td>0.035417</td><td>+0.757824</td><td><span class="fail-text">Fail</span></td></tr>
+<tr><td>P95</td><td>0.95</td><td>0.90625</td><td>0.04375</td><td>+0.78482</td><td><span class="fail-text">Fail</span></td></tr>
+<tr><td>P99</td><td>0.99</td><td>0.958333</td><td>0.031667</td><td>+0.768279</td><td><span class="fail-text">Fail</span></td></tr>
+</tbody>
+</table>
+</div>
+
+
+<div class="scroll" tabindex="0">
+<table>
+<caption class="note">Predeclared gates for ercot-delta-quantile-v1.4. Exact values from evidence/ercot_v1_4_validation.json and GET /api/gert/model/evidence. Pinball skill is a unitless score against a frozen baseline, not a percent accuracy.</caption>
+<thead><tr><th>Gate</th><th>Observed</th><th>Requirement, set beforehand</th><th>Result</th></tr></thead>
+<tbody>
+<tr><td>Q50 calibration error</td><td>0.020833</td><td>absolute error ≤ 0.03</td><td><span class="pass-text">Pass</span></td></tr>
+<tr><td>Q90 calibration error</td><td>0.035417</td><td>absolute error ≤ 0.03</td><td><span class="fail-text">Fail</span></td></tr>
+<tr><td>Q95 calibration error</td><td>0.04375</td><td>absolute error ≤ 0.03</td><td><span class="fail-text">Fail</span></td></tr>
+<tr><td>Q99 calibration error</td><td>0.031667</td><td>absolute error ≤ 0.03</td><td><span class="fail-text">Fail</span></td></tr>
+<tr><td>Positive pinball skill</td><td>+0.757824</td><td>skill > 0 at every quantile</td><td><span class="pass-text">Pass</span></td></tr>
+<tr><td>Quantile monotonicity</td><td>0 crossings</td><td>crossings = 0</td><td><span class="pass-text">Pass</span></td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>What stayed gated</h2>
+<p>Production prediction, scenario analysis, and validated backtest stay unavailable. This site returns 503 for those routes and does not invent a forecast. The same evidence file is served at <a href="/api/gert/model/evidence">/api/gert/model/evidence</a> and stored in the main repository as <code>evidence/ercot_v1_4_validation.json</code>.</p>
+<h2>Limits of this record</h2>
+<ul>
+  <li>96 hourly observations are a small sample for tail quantiles.</li>
+  <li>Positive pinball skill is not calibration.</li>
+  <li>GERT is decision-support research and must not be used for autonomous grid control.</li>
+  <li>Data provenance for the candidate: official ERCOT system-load archives joined with ERA5 weather. That is the evaluation record, not a live feed on this website.</li>
+</ul>
+<p><a class="button primary" href="/history">Use the Historical Lab instead</a></p>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p><strong>Grid Extreme Risk Toolkit (GERT)</strong> is decision-support research. It is not an autonomous grid controller, and this deployment does not show live ERCOT load.</p>
+    <ul>
+      <li>Software concept DOI <a href="https://doi.org/10.5281/zenodo.23982226">10.5281/zenodo.23982226</a> (resolves to v1.2.0, published 2026-11-05; version DOI 10.5281/zenodo.23982227).</li>
+      <li>Dataset DOI <a href="https://doi.org/10.5281/zenodo.22975251">10.5281/zenodo.22975251</a> (Historical Lab, 216 public ERCOT hours, published 2026-09-26).</li>
+      <li>Sister benchmark DOI <a href="https://doi.org/10.5281/zenodo.24010850">10.5281/zenodo.24010850</a> (PJM Cold-Spell Calibration Benchmark v1.0.0, published 2026-11-06).</li>
+      <li>Tests: 141 backend and 50 frontend passed in CI on 2026-11-05 (main, commit 796e7683, the v1.2.0 archive). No main-branch run dated 2026-11-09 was found.</li>
+      <li>Community record: a few organizer-relayed sessions and hands-on runs, and 0 independent replications. <a href="https://gert-d.vercel.app/community">Companion ledger</a>. Participant and survey totals are not used here.</li>
+      <li><a href="https://github.com/DresdenGman/Grid-Extreme-Risk-Toolkit-GERT-">Source repository</a> · <a href="/api/gert/model/evidence">Evidence JSON</a> · <a href="https://gert-d.vercel.app/history">Companion Historical Lab</a></li>
+    </ul>
+  </div>
+</footer>
+
+</div>
+
+</body>
+</html>
