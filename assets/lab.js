@@ -153,6 +153,10 @@ async function initLab(root) {
       setText(root, "source", active.source_url);
       const sample = after.rows.find((row) => row.timestamp === "2023-08-10T15:00:00-05:00") || after.rows.reduce((best, row) => row.recorded > best.recorded ? row : best);
       const beforeGap = Math.max(0, sample.recorded - capacity);
+      const caseLabel = { "summer-2023": "Summer 2023", "spring-2023": "Spring 2023", "winter-2021": "Winter 2021" }[active.id] || active.title;
+      setText(root, "sample-case", caseLabel);
+      setText(root, "sample-capacity", `${formatMw(capacity, 0)} MW`);
+      setText(root, "sample-reduction", `${reduction}%`);
       setText(root, "sample-time", sample.timestamp);
       setText(root, "sample-recorded", `${formatMw(sample.recorded, 2)} MW`);
       setText(root, "sample-math", `${formatMw(sample.recorded, 2)} × (1 − ${reduction} / 100) = ${formatMw(sample.adjusted, 2)} MW`);

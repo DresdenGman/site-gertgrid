@@ -59,14 +59,14 @@ async function loadWeather() {
 
 async function refresh() {
   setText("banner", "Checking the status endpoints…");
-  const results = await Promise.all([loadStatus(), loadHealth(), loadWeather()]);
-  const answered = results.filter(Boolean).length;
+  const core = await Promise.all([loadStatus(), loadHealth()]);
   setText(
     "banner",
-    answered === 3
-      ? "Status, health, and weather answered. Prediction stays gated; ERCOT load and capacity are not connected, so they stay UNAVAILABLE."
+    core.every(Boolean)
+      ? "Status and health answered. The weather reading may take a few more seconds. Prediction stays gated; ERCOT load and capacity are not connected, so they stay UNAVAILABLE."
       : "Some sources did not answer; their fields say UNAVAILABLE. Prediction stays gated; ERCOT load and capacity are not connected."
   );
+  loadWeather();
 }
 
 const refreshButton = document.querySelector("[data-m-refresh]");

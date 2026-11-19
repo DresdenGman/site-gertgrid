@@ -91,7 +91,7 @@ def page(title: str, description: str, current: str, body: str, scripts: str = "
 <meta name="twitter:title" content="{title}">
 <meta name="twitter:description" content="{description}">
 <meta name="twitter:image" content="https://gertgrid.space/og.png">
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/site.css?v=20261119">
 <script type="application/ld+json">{{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Grid Extreme Risk Toolkit (GERT)","applicationCategory":"ScientificApplication","operatingSystem":"Web","url":"https://gertgrid.space","codeRepository":"https://github.com/DresdenGman/Grid-Extreme-Risk-Toolkit-GERT-","identifier":"https://doi.org/10.5281/zenodo.23982226","description":"Evidence-first research software for ERCOT tail-risk questions. The v1.4 candidate is rejected for production inference.","author":{{"@type":"Person","name":"Dresden Goehner"}}}}</script>
 </head>
 <body>
@@ -237,7 +237,7 @@ def lab_block() -> str:
     <svg class="chart" data-chart role="img" aria-label="Recorded hourly load for the selected window. Orange bars are hours still above the assumed capacity after the reduction. The green line is the assumed capacity."></svg>
     <div class="card">
       <h3>One hour, from the archive</h3>
-      <p>Summer 2023, <span data-field="sample-time">2023-08-10T15:00:00-05:00</span> (interval start, America/Chicago), at 80,000 MW and 5% until you change the controls.</p>
+      <p><span data-field="sample-case">Summer 2023</span>, <span data-field="sample-time">2023-08-10T15:00:00-05:00</span> (interval start, America/Chicago), at <span data-field="sample-capacity">80,000 MW</span> and <span data-field="sample-reduction">5%</span> until you change the controls.</p>
       <p>Recorded load <strong data-field="sample-recorded">84,660.62 MW</strong>.</p>
       <p class="formula" data-field="sample-math">84,660.62 × (1 − 5 / 100) = 80,427.59 MW</p>
       <p class="formula" data-field="sample-gap">max(0, 80,427.59 − 80,000) = 427.59 MW</p>
@@ -301,7 +301,7 @@ def home() -> str:
         "The v1.4 ERCOT candidate failed predeclared calibration gates. The Historical Lab recomputes published hourly load against assumptions you set.",
         "/",
         body,
-        "/assets/lab.js",
+        "/assets/lab.js?v=20261119",
     )
 
 
@@ -317,7 +317,7 @@ def history() -> str:
         "Checksummed Historical Lab for 216 hours of public ERCOT native load. Assumptions stay labeled as assumptions.",
         "/history",
         body,
-        "/assets/lab.js",
+        "/assets/lab.js?v=20261119",
     )
 
 
@@ -906,7 +906,7 @@ def dashboard() -> str:
 <meta http-equiv="refresh" content="0; url=/history">
 <link rel="canonical" href="https://gertgrid.space/history">
 <meta name="robots" content="noindex">
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/site.css?v=20261119">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -930,7 +930,7 @@ def not_found() -> str:
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Page not found — Grid Extreme Risk Toolkit (GERT)</title>
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/site.css?v=20261119">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="robots" content="noindex">
 </head>
