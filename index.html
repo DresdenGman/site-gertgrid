@@ -31,20 +31,24 @@
     <small>Research record, not a live dispatch tool</small>
   </div>
   <nav class="primary" aria-label="Primary"><a href="/" aria-current="page">Record</a>
+<a href="/monitor">Live Monitor</a>
 <a href="/history">Historical Lab</a>
 <a href="/review">Review</a>
 <a href="/benchmark">Benchmarks</a>
 <a href="/events/polar-vortex">Event Replay</a>
 <a href="/scenario">Scenario</a>
+<a href="/briefs">Briefs</a>
+<a href="/community">Community</a>
 <a href="/research">Research</a>
-<a href="/about">About</a></nav>
+<a href="/about">About</a>
+<a href="/changelog">Version</a></nav>
 </div></header>
 <main id="content" class="wrap">
 
 <p class="kicker">Grid Extreme Risk Toolkit (GERT)</p>
 <h1>Thresholds were set first. Then the model failed them.</h1>
 <p class="lede">Dresden Goehner froze the promotion gates for <code>ercot-delta-quantile-v1.4</code> before the evaluation window was opened. On the untouched 96-hour window the candidate missed Q90, Q95, and Q99. That rejection, published 2026-08-30, is the front of this site. The Historical Lab below can be recomputed from a public archive.</p>
-<p class="banner">Official ERCOT load and live weather are not connected on gertgrid.space. No estimated megawatt or weather value is shown in their place. Prediction and scenario endpoints stay closed.</p>
+<p class="banner">Official ERCOT load is not connected on gertgrid.space. No estimated megawatt value is shown in its place. Prediction and scenario endpoints stay closed. The one live reading on this site is external weather on the <a href="/monitor">Live Monitor</a>, labeled with its source.</p>
 <div class="grid stats">
   <article class="card fail"><h3>Q90 absolute error</h3><p class="stat-value bad">0.035417</p><p class="note">Gate was ≤ 0.03. Fail.</p></article>
   <article class="card fail"><h3>Q95 absolute error</h3><p class="stat-value bad">0.04375</p><p class="note">Gate was ≤ 0.03. Fail.</p></article>
@@ -68,6 +72,32 @@
 </div>
 
 <p><a class="button primary" href="/review">Read the full rejection</a> <a class="button" href="/api/gert/model/evidence">Evidence JSON</a></p>
+
+<section>
+  <p class="kicker">Next candidate · evidence only</p>
+  <h2>The v1.5 candidate met the numeric gate. It is still not packaged.</h2>
+  <p><code>ercot-lag-residual-gbt-v1.5-candidate</code> was scored on a preregistered 672-hour window. Its point estimates sit inside the same ±0.03 gate that v1.4 missed, pinball skill is +0.93 to +0.94, and quantile crossings are 0. Two things keep it out of production: the Wilson 95% intervals for Q50 and Q90 extend past the gate, and the evidence-bundle and feature-availability gates are not passed. The v1.4 rejection is unchanged, and the prediction endpoints stay gated.</p>
+  
+<div class="scroll" tabindex="0">
+<table>
+<caption class="note">Evaluation window 2026-10-05 through 2026-11-01, 672 hourly observations. Point estimates and Wilson 95% intervals from the PR #23 evidence snapshot (<code>evidence/snapshots/pr-23/ercot_v1_5_validation.json</code>, published 2026-11-08). The published scores use realized ERA5 weather and are an optimistic upper bound, not a production forecast.</caption>
+<thead><tr><th>Quantile</th><th>Target coverage</th><th>Empirical coverage</th><th>Signed error</th><th>Wilson 95% CI</th><th>Pinball skill</th></tr></thead>
+<tbody>
+<tr><td>Q50</td><td>0.50</td><td>0.508929</td><td>+0.008929</td><td>0.4712 – 0.5466</td><td>+0.930441</td></tr>
+<tr><td>Q90</td><td>0.90</td><td>0.918155</td><td>+0.018155</td><td>0.8950 – 0.9366</td><td>+0.931548</td></tr>
+<tr><td>Q95</td><td>0.95</td><td>0.956845</td><td>+0.006845</td><td>0.9387 – 0.9698</td><td>+0.932996</td></tr>
+<tr><td>Q99</td><td>0.99</td><td>0.988095</td><td>−0.001905</td><td>0.9767 – 0.9940</td><td>+0.944255</td></tr>
+</tbody>
+</table>
+</div>
+
+  <div class="grid stats">
+    <article class="card"><h3>Production</h3><p class="stat-value">None.</p><p class="note">No validated model is in production. Prediction endpoints stay gated.</p></article>
+    <article class="card fail"><h3>v1.4</h3><p class="stat-value bad">Rejected.</p><p class="note">Q90, Q95, and Q99 missed the ≤ 0.03 gate on the frozen 96-hour window.</p></article>
+    <article class="card"><h3>v1.5</h3><p class="stat-value">Evidence only.</p><p class="note">Point estimates inside the gate on 672 hours. Not packaged; PR #23 unmerged.</p></article>
+  </div>
+</section>
+
 
 <section class="lab" data-lab
   data-reference-case="summer-2023"
@@ -117,6 +147,10 @@
         </table>
       </div>
     </details>
+    <p class="row">
+      <button type="button" data-dl-json>Download the JSON report</button>
+      <button type="button" data-dl-csv>Download the hourly CSV</button>
+    </p>
     <p class="note">Source archive SHA-256 <span data-field="sha">34e7067d3273f56be42ce469e23747cff0db736d668519070ad63674c3ddecd4</span>. <a data-field="source" href="https://www.ercot.com/files/docs/2023/02/09/Native_Load_2023.zip">ERCOT native-load archive</a>. Bundled file SHA-256 f403890ad50a654f85584e03642267d1a06bafb25bf4799346bbf87c4999181b. Winter 2021 load includes outages and load shedding and is not unconstrained demand. Native load is not the forecast-zone series used by the probabilistic candidate.</p>
   </div>
 </section>
@@ -132,8 +166,8 @@
       <li>Dataset DOI <a href="https://doi.org/10.5281/zenodo.22975251">10.5281/zenodo.22975251</a> (Historical Lab, 216 public ERCOT hours, published 2026-09-26).</li>
       <li>Sister benchmark DOI <a href="https://doi.org/10.5281/zenodo.24010850">10.5281/zenodo.24010850</a> (PJM Cold-Spell Calibration Benchmark v1.0.0, published 2026-11-06).</li>
       <li>Tests: 141 backend and 50 frontend passed in CI on 2026-11-05 (main, commit 796e7683, the v1.2.0 archive). No main-branch run dated 2026-11-09 was found.</li>
-      <li>Community record: a few organizer-relayed sessions and hands-on runs, and 0 independent replications. <a href="https://gert-d.vercel.app/community">Companion ledger</a>. Participant and survey totals are not used here.</li>
-      <li><a href="https://github.com/DresdenGman/Grid-Extreme-Risk-Toolkit-GERT-">Source repository</a> · <a href="/api/gert/model/evidence">Evidence JSON</a> · <a href="https://gert-d.vercel.app/history">Companion Historical Lab</a></li>
+      <li>Community record: a few organizer-relayed sessions and hands-on runs, and 0 independent replications. <a href="/community">Community evidence ledger</a>. Participant and survey totals are not used here.</li>
+      <li><a href="https://github.com/DresdenGman/Grid-Extreme-Risk-Toolkit-GERT-">Source repository</a> · <a href="/api/gert/model/evidence">Evidence JSON</a> · <a href="/history">Historical Lab</a></li>
     </ul>
   </div>
 </footer>

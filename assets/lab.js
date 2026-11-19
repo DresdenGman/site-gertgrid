@@ -98,6 +98,7 @@ async function initLab(root) {
     const table = root.querySelector("[data-hours]");
     const results = root.querySelector(".results");
     let active = cases.find((item) => item.id === root.dataset.referenceCase) || cases[0];
+    let lastState = null;
 
     function publish() {
       const capacity = Number(capacityInput.value);
@@ -159,10 +160,30 @@ async function initLab(root) {
       setText(root, "sample-before", `${formatMw(beforeGap, 2)} MW`);
       drawChart(svg, after.rows, capacity);
       renderTable(table, after.rows);
+      lastState = { active, capacity, reduction, before, after };
       status.textContent = referenceMatch
         ? "Reference case matches the published Historical Lab figures."
         : "Results were recomputed in the browser from the checksummed archive.";
       root.dataset.ready = "true";
+    }
+
+    const params = new URLSearchParams(location.search);
+    const wantedCase = params.get("case");
+    if (wantedCase) {
+      const found = cases.find((item) => item.id === wantedCase);
+      if (found) {
+        active = found;
+        caseButtons.forEach((other) => other.setAttribute("aria-pressed", other.dataset.case === found.id ? "true" : "false"));
+        capacityInput.value = String(found.default_capacity_mw);
+      }
+    }
+    if (params.has("capacity")) {
+      const capParam = Number(params.get("capacity"));
+      if (Number.isFinite(capParam) && capParam > 0) capacityInput.value = String(capParam);
+    }
+    if (params.has("reduction")) {
+      const redParam = Number(params.get("reduction"));
+      if (Number.isFinite(redParam) && redParam >= 0 && redParam <= 20) reductionInput.value = String(redParam);
     }
 
     caseButtons.forEach((button) => {
@@ -175,6 +196,53 @@ async function initLab(root) {
     });
     capacityInput.addEventListener("input", publish);
     reductionInput.addEventListener("input", publish);
+
+    function saveFile(name, text, type) {
+      const url = URL.createObjectURL(new Blob([text], { type }));
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = name;
+      document.body.appendChild(link);
+      try { link.click(); } finally { link.remove(); }
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+    const dlJson = root.querySelector("[data-dl-json]");
+    const dlCsv = root.querySelector("[data-dl-csv]");
+    if (dlJson) dlJson.addEventListener("click", () => {
+      if (!lastState) return;
+      const { active: c, capacity, reduction, before, after } = lastState;
+      const report = {
+        schema: "gert-historical-lab-report-v1",
+        case: c.id,
+        case_title: c.title,
+        capacity_mw: capacity,
+        reduction_pct: reduction,
+        hours_above_before: before.hoursAbove,
+        hours_above_after: after.hoursAbove,
+        gap_energy_before_mwh: roundMwh(before.gapEnergy),
+        gap_energy_after_mwh: roundMwh(after.gapEnergy),
+        min_reduction_pct: Number(after.minReduction.toFixed(3)),
+        peak_mw: Number(after.peak.toFixed(3)),
+        source_archive_sha256: c.source_archive_sha256,
+        rows: after.rows.map((row) => ({
+          timestamp: row.timestamp,
+          recorded_mw: Number(row.recorded.toFixed(3)),
+          adjusted_mw: Number(row.adjusted.toFixed(3)),
+          capacity_mw: capacity,
+          gap_mw: Number(row.gap.toFixed(3)),
+        })),
+      };
+      saveFile(`gert-historical-lab-${c.id}.json`, JSON.stringify(report, null, 2), "application/json");
+    });
+    if (dlCsv) dlCsv.addEventListener("click", () => {
+      if (!lastState) return;
+      const lines = ["timestamp,recorded_mw,adjusted_mw,capacity_mw,gap_mw"];
+      lastState.after.rows.forEach((row) => {
+        lines.push([row.timestamp, row.recorded.toFixed(3), row.adjusted.toFixed(3), lastState.capacity, row.gap.toFixed(3)].join(","));
+      });
+      saveFile(`gert-historical-lab-${lastState.active.id}.csv`, lines.join("\n") + "\n", "text/csv");
+    });
+
     publish();
   } catch (error) {
     status.textContent = error instanceof Error ? error.message : "The Historical Lab could not load the archive.";

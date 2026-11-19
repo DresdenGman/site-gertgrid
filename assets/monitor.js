@@ -1,0 +1,74 @@
+function field(name) {
+  return document.querySelector(`[data-m="${name}"]`);
+}
+
+function setText(name, text) {
+  const node = field(name);
+  if (node) node.textContent = text;
+}
+
+async function loadStatus() {
+  try {
+    const response = await fetch("/api/gert/status");
+    if (!response.ok) throw new Error(String(response.status));
+    const data = await response.json();
+    setText("model", `${data.model_status} · ${data.model_version}`);
+    return true;
+  } catch {
+    setText("model", "UNAVAILABLE");
+    return false;
+  }
+}
+
+async function loadHealth() {
+  try {
+    const response = await fetch("/api/gert/health");
+    if (!response.ok) throw new Error(String(response.status));
+    const data = await response.json();
+    setText("health", String(data.status));
+    setText("health-note", `Backend ${data.backend} · API ${data.api_version} · answered ${data.timestamp}`);
+    return true;
+  } catch {
+    setText("health", "UNAVAILABLE");
+    setText("health-note", "The health endpoint did not answer.");
+    return false;
+  }
+}
+
+async function loadWeather() {
+  try {
+    const url = "https://api.open-meteo.com/v1/forecast?latitude=30.2672&longitude=-97.7431&current=temperature_2m,wind_speed_10m,shortwave_radiation";
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(String(response.status));
+    const data = await response.json();
+    const current = data.current;
+    if (!current || !Number.isFinite(current.temperature_2m)) throw new Error("no current weather");
+    setText("temp", `${current.temperature_2m.toFixed(1)} °C`);
+    setText("wind", Number.isFinite(current.wind_speed_10m) ? `${(current.wind_speed_10m / 3.6).toFixed(1)} m/s` : "—");
+    setText("solar", Number.isFinite(current.shortwave_radiation) ? `${Math.round(current.shortwave_radiation)} W/m²` : "—");
+    setText("weather-time", String(current.time).replace("T", " "));
+    return true;
+  } catch {
+    setText("temp", "UNAVAILABLE");
+    setText("wind", "—");
+    setText("solar", "—");
+    setText("weather-time", "—");
+    return false;
+  }
+}
+
+async function refresh() {
+  setText("banner", "Checking the status endpoints…");
+  const results = await Promise.all([loadStatus(), loadHealth(), loadWeather()]);
+  const answered = results.filter(Boolean).length;
+  setText(
+    "banner",
+    answered === 3
+      ? "Status, health, and weather answered. Prediction stays gated; ERCOT load and capacity are not connected, so they stay UNAVAILABLE."
+      : "Some sources did not answer; their fields say UNAVAILABLE. Prediction stays gated; ERCOT load and capacity are not connected."
+  );
+}
+
+const refreshButton = document.querySelector("[data-m-refresh]");
+if (refreshButton) refreshButton.addEventListener("click", refresh);
+refresh();

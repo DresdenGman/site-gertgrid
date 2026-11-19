@@ -1,0 +1,117 @@
+# Changelog
+
+All notable changes to this project are documented here. The format follows
+[Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions use
+[semantic versioning](https://semver.org/).
+
+## [Unreleased]
+
+### Added
+
+- One-click GitHub Codespaces environment. The dev container installs Python
+  and Node dependencies, recomputes one Historical Lab case (summer-2023,
+  80,000 MW, 5%) as a smoke check, and starts the web app and API. README
+  gains a Codespaces badge and a "Start here" row.
+- Weekly Dependabot updates for npm, pip, and GitHub Actions.
+- Zenodo software archive for the 1.2.0 release: version DOI
+  10.5281/zenodo.23982227, concept DOI 10.5281/zenodo.23982226. The README
+  badge row now labels the software and dataset DOIs separately, and
+  CITATION.cff records the concept DOI and the 1.2.0 release date.
+
+### Changed
+
+- Studio pages use the paper journal shell. Methods, version, review, and
+  the Historical Lab state what they are. Fig. 1 can be reprinted with
+  `node scripts/fig1.mjs`.
+- The homepage contents list links every existing route. The Historical
+  Lab entry describes a deterministic exercise over three 72-hour windows.
+- The website homepage is the decision poster. It reads v1.4 from
+  `evidence/ercot_v1_4_validation.json` and v1.5 from the unmerged PR #23
+  snapshot until that file is on main. Weather, system load, and capacity
+  render only when the API returns an external forecast or official ERCOT
+  values; estimated fallbacks stay UNAVAILABLE. The Historical Lab remains
+  at `/history`.
+- README and the live tool aligned with the evidence that can be checked
+  (#25). The README leads with the Historical Lab, the rejected v1.4 gate,
+  and the community ledger. Survey totals stay labeled organizer-reported
+  and unverified. The app cites the Zenodo records and explains why scenario
+  analysis is off.
+- `package.json` and the API version now read 1.2.0, matching the release.
+- The dev container uses `npm ci`.
+- GitHub homepage re-skinned: new hero banner and five evidence posters in
+  the Swiss light-poster tradition — dark grounds and one white sheet, a
+  single luminous subject per poster, grotesque type set quietly, red
+  reserved for failure
+  and exceedance. The hero is a calm field of light with a single spike
+  through the capacity line; the summer-2023 load curve, the v1.4 gate
+  verdict, the Historical Lab scenario, the participant feedback and the
+  decision pipeline each get their own poster, and the product screenshots
+  are re-framed on dark mats. Every figure printed on the posters was
+  checked against the repository's evidence bundle before publication;
+  no figures changed, and the README drift-guard test still passes. This
+  superseded a brief Bauhaus treatment before it was ever released.
+
+### Fixed
+
+- Frontend `next` 16.4.6. `npm audit --audit-level=high` reports no high
+  findings. The picomatch advisory GHSA-fc5q-39xc-vjpf was withdrawn on
+  2026-11-18; the lockfile already resolved picomatch 4.0.7.
+- Credential tests no longer depend on ERCOT credentials set in the
+  environment.
+
+## [1.2.0] - 2026-11-05
+
+### Fixed
+
+- Frontend dependency vulnerabilities that had kept CI red since mid-October:
+  `next` 16.4.1 (critical unauthenticated RCE advisories), `vite` 8.3.6,
+  `vitest` 4.1.12, `undici` 7.30.2. The full lockfile now has no high or
+  critical findings and CI is green again.
+- Bulletin timestamps render the actual minutes instead of a hard-coded `:00`.
+
+### Changed
+
+- Model naming corrected to match the implementation: the estimator is a
+  gradient-boosting regressor with empirical residual quantiles, so version
+  strings and demo/presentation identifiers no longer say "conformal" or
+  "quantile regression forest".
+- Demo-mode backtest entries are labeled as illustrative simulated values,
+  not measured model performance.
+- Data-source descriptions corrected in `DEPLOYMENT.md`,
+  `docs/REAL_DATA_SETUP.md`, and `docs/PROJECT_INTRO.md`: ERCOT is the only
+  real feed (official API, with any fallback returned as a clearly labeled
+  `estimated_fallback`); the CAISO/PJM/NYISO adapters return labeled
+  estimates, not live data.
+- `DEPLOYMENT.md` status section rewritten to describe the actual deployment
+  state instead of local-dev boilerplate.
+- README first screen restructured: audience routing table, evidence tables
+  tied to machine-readable artifacts, and a drift-guard test that fails CI if
+  the printed numbers diverge from the evidence files.
+- The social-preview/banner image was re-encoded without embedded provenance
+  metadata (pixels unchanged).
+
+### Added
+
+- `ROADMAP.md`, this changelog, `CODE_OF_CONDUCT.md`, a pull-request
+  template, and repository topics.
+- Historical Lab pilot feedback report (`docs/FEEDBACK.md`) with aggregate
+  data and a reproducible analysis script (`data/feedback/`).
+- Regression tests for the bulletin timestamp format and README evidence
+  drift (backend suite: 135 tests).
+
+### Removed
+
+- Leftover pre-Next.js template files at the repository root
+  (`index.html`, `index.tsx`, `metadata.json`) and stale merged branches.
+
+## [1.1.0] - 2026-09-13
+
+### Added
+
+- Historical Lab: three source-linked ERCOT native-load cases of 72 hourly
+  observations each, with user-defined capacity and uniform load reduction,
+  before/after exceedance-hour counts, integrated gap energy, and the
+  algebraic peak-clearing reduction.
+- JSON reports and hourly CSV exports, public source checksums, a
+  reproducible archive extractor, and a Python report verifier.
+- A structured GitHub review template and a 20-minute workshop guide.

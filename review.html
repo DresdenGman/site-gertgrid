@@ -31,13 +31,17 @@
     <small>Research record, not a live dispatch tool</small>
   </div>
   <nav class="primary" aria-label="Primary"><a href="/">Record</a>
+<a href="/monitor">Live Monitor</a>
 <a href="/history">Historical Lab</a>
 <a href="/review" aria-current="page">Review</a>
 <a href="/benchmark">Benchmarks</a>
 <a href="/events/polar-vortex">Event Replay</a>
 <a href="/scenario">Scenario</a>
+<a href="/briefs">Briefs</a>
+<a href="/community">Community</a>
 <a href="/research">Research</a>
-<a href="/about">About</a></nav>
+<a href="/about">About</a>
+<a href="/changelog">Version</a></nav>
 </div></header>
 <main id="content" class="wrap">
 
@@ -84,6 +88,48 @@
   <li>Data provenance for the candidate: official ERCOT system-load archives joined with ERA5 weather. That is the evaluation record, not a live feed on this website.</li>
 </ul>
 <p><a class="button primary" href="/history">Use the Historical Lab instead</a></p>
+<section>
+  <p class="kicker">Review &amp; reproduce</p>
+  <h2>How to critique the evidence.</h2>
+  <p>A review is a check you can repeat: open a historical case, recompute one row, and say what you found. It is not a model validation and it does not authorize a forecast.</p>
+  <p class="note">Criticism is recorded only if you submit it. The structured GitHub form and the public discussion are the record. The <a href="/community">community page</a> lists what people have published and which notes are still open. Private replies stay off that page. A comment is not an endorsement.</p>
+  <div class="card">
+    <h3>Start with a five-minute counterexample.</h3>
+    <p>Not ready for a full technical review? Make two invented worlds produce identical meter readings and inspect why their unserved energy differs. Includes a short facilitator guide; no account or installation needed.</p>
+    <p><a href="/briefs/same-meter">Open Same meter, two worlds →</a></p>
+    <p class="note">An introductory teaching activity, not a completed review of the historical dataset.</p>
+  </div>
+  <div class="banner">
+    <h3>One complete review, about 10 minutes.</h3>
+    <ol>
+      <li><a href="/history?case=summer-2023&amp;capacity=80000&amp;reduction=0">Open the summer case at 80,000 MW and 0% reduction.</a> Note the hours above assumed capacity and the gap energy.</li>
+      <li>Switch to 5% reduction. Explain why the hours and energy change. Can you distinguish the actual observations from the two assumptions?</li>
+      <li>Download the JSON report and hourly CSV. Recompute one row as max(0, adjusted load − capacity). Sum the hourly gaps to check the total in MWh.</li>
+      <li>Inspect the winter case. Why would measured load during outages be insufficient to reconstruct unmet demand?</li>
+      <li>Share one result you checked and one change you would make. A negative finding is useful.</li>
+    </ol>
+    <p><a class="button primary" href="/history?case=summer-2023&amp;capacity=80000&amp;reduction=0">Start the review</a></p>
+  </div>
+  <div class="grid duo">
+    <article class="card">
+      <h3>Reproduce without the website</h3>
+      <p>The archive extractor and independent report checker use Python's standard library. The source files, data version, checksums, formulas and limits are documented in the repository.</p>
+      <p><a href="https://github.com/DresdenGman/Grid-Extreme-Risk-Toolkit-GERT-/blob/main/docs/HISTORICAL_LAB.md">Reproduction instructions</a></p>
+    </article>
+    <article class="card">
+      <h3>Use it in a small workshop</h3>
+      <p>A ready-to-use 20-minute exercise covers load, power versus energy, counterfactual assumptions, and the difference between arithmetic and a reliable operational decision.</p>
+      <p><a href="https://github.com/DresdenGman/Grid-Extreme-Risk-Toolkit-GERT-/blob/main/docs/WORKSHOP.md">Open the facilitator guide</a></p>
+    </article>
+  </div>
+  <h2>Leave an inspectable review.</h2>
+  <p>Use the structured GitHub form for a reproducible review, or add one concise field note to the public discussion. You choose whether to submit. GitHub posts are public: do not include personal contact information, private datasets, credentials, or another person's words without permission.</p>
+  <p class="row"><a class="button" href="https://github.com/DresdenGman/Grid-Extreme-Risk-Toolkit-GERT-/issues/new?template=historical_review.yml">Write a structured review</a> <a class="button primary" href="https://github.com/DresdenGman/Grid-Extreme-Risk-Toolkit-GERT-/discussions/3">Add one public field note</a></p>
+  <p><a href="/community">See the community evidence ledger →</a></p>
+  <p class="note">A review records what you actually completed. Feedback is not automatically an endorsement; hosting a session, contributing a critique, and adopting software are different outcomes.</p>
+  <h2>What this release establishes</h2>
+  <p>Three public-data cases, reproducible deterministic calculations, downloadable reports, and an open review process. User-defined capacity is not historical capacity; counterfactual gap energy is not expected unserved energy. The probabilistic research candidate remains gated until its validation requirements pass.</p>
+</section>
 
 </main>
 
@@ -95,8 +141,8 @@
       <li>Dataset DOI <a href="https://doi.org/10.5281/zenodo.22975251">10.5281/zenodo.22975251</a> (Historical Lab, 216 public ERCOT hours, published 2026-09-26).</li>
       <li>Sister benchmark DOI <a href="https://doi.org/10.5281/zenodo.24010850">10.5281/zenodo.24010850</a> (PJM Cold-Spell Calibration Benchmark v1.0.0, published 2026-11-06).</li>
       <li>Tests: 141 backend and 50 frontend passed in CI on 2026-11-05 (main, commit 796e7683, the v1.2.0 archive). No main-branch run dated 2026-11-09 was found.</li>
-      <li>Community record: a few organizer-relayed sessions and hands-on runs, and 0 independent replications. <a href="https://gert-d.vercel.app/community">Companion ledger</a>. Participant and survey totals are not used here.</li>
-      <li><a href="https://github.com/DresdenGman/Grid-Extreme-Risk-Toolkit-GERT-">Source repository</a> · <a href="/api/gert/model/evidence">Evidence JSON</a> · <a href="https://gert-d.vercel.app/history">Companion Historical Lab</a></li>
+      <li>Community record: a few organizer-relayed sessions and hands-on runs, and 0 independent replications. <a href="/community">Community evidence ledger</a>. Participant and survey totals are not used here.</li>
+      <li><a href="https://github.com/DresdenGman/Grid-Extreme-Risk-Toolkit-GERT-">Source repository</a> · <a href="/api/gert/model/evidence">Evidence JSON</a> · <a href="/history">Historical Lab</a></li>
     </ul>
   </div>
 </footer>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Version — Grid Extreme Risk Toolkit (GERT)</title>
+<meta name="description" content="Software version, changelog, and the citation DOIs already recorded for GERT.">
+<meta name="author" content="Dresden Goehner">
+<link rel="canonical" href="https://gertgrid.space/changelog">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<meta property="og:title" content="Version — Grid Extreme Risk Toolkit (GERT)">
+<meta property="og:description" content="Software version, changelog, and the citation DOIs already recorded for GERT.">
+<meta property="og:image" content="https://gertgrid.space/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Grid Extreme Risk Toolkit (GERT): the v1.4 candidate failed its predeclared calibration gate.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Version — Grid Extreme Risk Toolkit (GERT)">
+<meta name="twitter:description" content="Software version, changelog, and the citation DOIs already recorded for GERT.">
+<meta name="twitter:image" content="https://gertgrid.space/og.png">
+<link rel="stylesheet" href="/assets/site.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Grid Extreme Risk Toolkit (GERT)","applicationCategory":"ScientificApplication","operatingSystem":"Web","url":"https://gertgrid.space","codeRepository":"https://github.com/DresdenGman/Grid-Extreme-Risk-Toolkit-GERT-","identifier":"https://doi.org/10.5281/zenodo.23982226","description":"Evidence-first research software for ERCOT tail-risk questions. The v1.4 candidate is rejected for production inference.","author":{"@type":"Person","name":"Dresden Goehner"}}</script>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<div class="frame">
+<header class="site"><div class="wrap">
+  <div class="brand">
+    <a class="name" href="/">Grid Extreme Risk Toolkit (GERT)</a>
+    <small>Research record, not a live dispatch tool</small>
+  </div>
+  <nav class="primary" aria-label="Primary"><a href="/">Record</a>
+<a href="/monitor">Live Monitor</a>
+<a href="/history">Historical Lab</a>
+<a href="/review">Review</a>
+<a href="/benchmark">Benchmarks</a>
+<a href="/events/polar-vortex">Event Replay</a>
+<a href="/scenario">Scenario</a>
+<a href="/briefs">Briefs</a>
+<a href="/community">Community</a>
+<a href="/research">Research</a>
+<a href="/about">About</a>
+<a href="/changelog" aria-current="page">Version</a></nav>
+</div></header>
+<main id="content" class="wrap">
+
+<p class="kicker">Version 1.2.0</p>
+<h1>GERT: Grid Extreme Risk Toolkit</h1>
+<p class="lede">Dresden Goehner (2026). The changelog below is the file in the repository. The DOIs are the ones already recorded there.</p>
+<div class="card">
+  <p class="formula">Software DOI 10.5281/zenodo.23982227 (version 1.2.0)<br>
+Concept DOI 10.5281/zenodo.23982226<br>
+Dataset DOI 10.5281/zenodo.22975251</p>
+</div>
+<p>All notable changes to this project are documented here. The format follows <a href="https://keepachangelog.com/en/1.1.0/">Keep a Changelog</a>; versions use <a href="https://semver.org/">semantic versioning</a>.</p>
+<h2>Unreleased</h2>
+<h3>Added</h3>
+<ul>
+<li>One-click GitHub Codespaces environment. The dev container installs Python and Node dependencies, recomputes one Historical Lab case (summer-2023, 80,000 MW, 5%) as a smoke check, and starts the web app and API. README gains a Codespaces badge and a &quot;Start here&quot; row.</li>
+<li>Weekly Dependabot updates for npm, pip, and GitHub Actions.</li>
+<li>Zenodo software archive for the 1.2.0 release: version DOI 10.5281/zenodo.23982227, concept DOI 10.5281/zenodo.23982226. The README badge row now labels the software and dataset DOIs separately, and CITATION.cff records the concept DOI and the 1.2.0 release date.</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li>Studio pages use the paper journal shell. Methods, version, review, and the Historical Lab state what they are. Fig. 1 can be reprinted with <code>node scripts/fig1.mjs</code>.</li>
+<li>The homepage contents list links every existing route. The Historical Lab entry describes a deterministic exercise over three 72-hour windows.</li>
+<li>The website homepage is the decision poster. It reads v1.4 from <code>evidence/ercot_v1_4_validation.json</code> and v1.5 from the unmerged PR #23 snapshot until that file is on main. Weather, system load, and capacity render only when the API returns an external forecast or official ERCOT values; estimated fallbacks stay UNAVAILABLE. The Historical Lab remains at <code>/history</code>.</li>
+<li>README and the live tool aligned with the evidence that can be checked (#25). The README leads with the Historical Lab, the rejected v1.4 gate, and the community ledger. Survey totals stay labeled organizer-reported and unverified. The app cites the Zenodo records and explains why scenario analysis is off.</li>
+<li><code>package.json</code> and the API version now read 1.2.0, matching the release.</li>
+<li>The dev container uses <code>npm ci</code>.</li>
+<li>GitHub homepage re-skinned: new hero banner and five evidence posters in the Swiss light-poster tradition — dark grounds and one white sheet, a single luminous subject per poster, grotesque type set quietly, red reserved for failure and exceedance. The hero is a calm field of light with a single spike through the capacity line; the summer-2023 load curve, the v1.4 gate verdict, the Historical Lab scenario, the participant feedback and the decision pipeline each get their own poster, and the product screenshots are re-framed on dark mats. Every figure printed on the posters was checked against the repository&#x27;s evidence bundle before publication; no figures changed, and the README drift-guard test still passes. This superseded a brief Bauhaus treatment before it was ever released.</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li>Frontend <code>next</code> 16.4.6. <code>npm audit --audit-level=high</code> reports no high findings. The picomatch advisory GHSA-fc5q-39xc-vjpf was withdrawn on 2026-11-18; the lockfile already resolved picomatch 4.0.7.</li>
+<li>Credential tests no longer depend on ERCOT credentials set in the environment.</li>
+</ul>
+<h2>1.2.0] - 2026-11-05</h2>
+<h3>Fixed</h3>
+<ul>
+<li>Frontend dependency vulnerabilities that had kept CI red since mid-October: <code>next</code> 16.4.1 (critical unauthenticated RCE advisories), <code>vite</code> 8.3.6, <code>vitest</code> 4.1.12, <code>undici</code> 7.30.2. The full lockfile now has no high or critical findings and CI is green again.</li>
+<li>Bulletin timestamps render the actual minutes instead of a hard-coded <code>:00</code>.</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li>Model naming corrected to match the implementation: the estimator is a gradient-boosting regressor with empirical residual quantiles, so version strings and demo/presentation identifiers no longer say &quot;conformal&quot; or &quot;quantile regression forest&quot;.</li>
+<li>Demo-mode backtest entries are labeled as illustrative simulated values, not measured model performance.</li>
+<li>Data-source descriptions corrected in <code>DEPLOYMENT.md</code>, <code>docs/REAL_DATA_SETUP.md</code>, and <code>docs/PROJECT_INTRO.md</code>: ERCOT is the only real feed (official API, with any fallback returned as a clearly labeled <code>estimated_fallback</code>); the CAISO/PJM/NYISO adapters return labeled estimates, not live data.</li>
+<li><code>DEPLOYMENT.md</code> status section rewritten to describe the actual deployment state instead of local-dev boilerplate.</li>
+<li>README first screen restructured: audience routing table, evidence tables tied to machine-readable artifacts, and a drift-guard test that fails CI if the printed numbers diverge from the evidence files.</li>
+<li>The social-preview/banner image was re-encoded without embedded provenance metadata (pixels unchanged).</li>
+</ul>
+<h3>Added</h3>
+<ul>
+<li><code>ROADMAP.md</code>, this changelog, <code>CODE_OF_CONDUCT.md</code>, a pull-request template, and repository topics.</li>
+<li>Historical Lab pilot feedback report (<code>docs/FEEDBACK.md</code>) with aggregate data and a reproducible analysis script (<code>data/feedback/</code>).</li>
+<li>Regression tests for the bulletin timestamp format and README evidence drift (backend suite: 135 tests).</li>
+</ul>
+<h3>Removed</h3>
+<ul>
+<li>Leftover pre-Next.js template files at the repository root (<code>index.html</code>, <code>index.tsx</code>, <code>metadata.json</code>) and stale merged branches.</li>
+</ul>
+<h2>1.1.0] - 2026-09-13</h2>
+<h3>Added</h3>
+<ul>
+<li>Historical Lab: three source-linked ERCOT native-load cases of 72 hourly observations each, with user-defined capacity and uniform load reduction, before/after exceedance-hour counts, integrated gap energy, and the algebraic peak-clearing reduction.</li>
+<li>JSON reports and hourly CSV exports, public source checksums, a reproducible archive extractor, and a Python report verifier.</li>
+<li>A structured GitHub review template and a 20-minute workshop guide.</li>
+</ul>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p><strong>Grid Extreme Risk Toolkit (GERT)</strong> is decision-support research. It is not an autonomous grid controller, and this deployment does not show live ERCOT load.</p>
+    <ul>
+      <li>Software concept DOI <a href="https://doi.org/10.5281/zenodo.23982226">10.5281/zenodo.23982226</a> (resolves to v1.2.0, published 2026-11-05; version DOI 10.5281/zenodo.23982227).</li>
+      <li>Dataset DOI <a href="https://doi.org/10.5281/zenodo.22975251">10.5281/zenodo.22975251</a> (Historical Lab, 216 public ERCOT hours, published 2026-09-26).</li>
+      <li>Sister benchmark DOI <a href="https://doi.org/10.5281/zenodo.24010850">10.5281/zenodo.24010850</a> (PJM Cold-Spell Calibration Benchmark v1.0.0, published 2026-11-06).</li>
+      <li>Tests: 141 backend and 50 frontend passed in CI on 2026-11-05 (main, commit 796e7683, the v1.2.0 archive). No main-branch run dated 2026-11-09 was found.</li>
+      <li>Community record: a few organizer-relayed sessions and hands-on runs, and 0 independent replications. <a href="/community">Community evidence ledger</a>. Participant and survey totals are not used here.</li>
+      <li><a href="https://github.com/DresdenGman/Grid-Extreme-Risk-Toolkit-GERT-">Source repository</a> · <a href="/api/gert/model/evidence">Evidence JSON</a> · <a href="/history">Historical Lab</a></li>
+    </ul>
+  </div>
+</footer>
+
+</div>
+
+</body>
+</html>

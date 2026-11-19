@@ -31,13 +31,17 @@
     <small>Research record, not a live dispatch tool</small>
   </div>
   <nav class="primary" aria-label="Primary"><a href="/">Record</a>
+<a href="/monitor">Live Monitor</a>
 <a href="/history" aria-current="page">Historical Lab</a>
 <a href="/review">Review</a>
 <a href="/benchmark">Benchmarks</a>
 <a href="/events/polar-vortex">Event Replay</a>
 <a href="/scenario">Scenario</a>
+<a href="/briefs">Briefs</a>
+<a href="/community">Community</a>
 <a href="/research">Research</a>
-<a href="/about">About</a></nav>
+<a href="/about">About</a>
+<a href="/changelog">Version</a></nav>
 </div></header>
 <main id="content" class="wrap">
 
@@ -93,6 +97,10 @@
         </table>
       </div>
     </details>
+    <p class="row">
+      <button type="button" data-dl-json>Download the JSON report</button>
+      <button type="button" data-dl-csv>Download the hourly CSV</button>
+    </p>
     <p class="note">Source archive SHA-256 <span data-field="sha">34e7067d3273f56be42ce469e23747cff0db736d668519070ad63674c3ddecd4</span>. <a data-field="source" href="https://www.ercot.com/files/docs/2023/02/09/Native_Load_2023.zip">ERCOT native-load archive</a>. Bundled file SHA-256 f403890ad50a654f85584e03642267d1a06bafb25bf4799346bbf87c4999181b. Winter 2021 load includes outages and load shedding and is not unconstrained demand. Native load is not the forecast-zone series used by the probabilistic candidate.</p>
   </div>
 </section>
@@ -108,8 +116,8 @@
       <li>Dataset DOI <a href="https://doi.org/10.5281/zenodo.22975251">10.5281/zenodo.22975251</a> (Historical Lab, 216 public ERCOT hours, published 2026-09-26).</li>
       <li>Sister benchmark DOI <a href="https://doi.org/10.5281/zenodo.24010850">10.5281/zenodo.24010850</a> (PJM Cold-Spell Calibration Benchmark v1.0.0, published 2026-11-06).</li>
       <li>Tests: 141 backend and 50 frontend passed in CI on 2026-11-05 (main, commit 796e7683, the v1.2.0 archive). No main-branch run dated 2026-11-09 was found.</li>
-      <li>Community record: a few organizer-relayed sessions and hands-on runs, and 0 independent replications. <a href="https://gert-d.vercel.app/community">Companion ledger</a>. Participant and survey totals are not used here.</li>
-      <li><a href="https://github.com/DresdenGman/Grid-Extreme-Risk-Toolkit-GERT-">Source repository</a> · <a href="/api/gert/model/evidence">Evidence JSON</a> · <a href="https://gert-d.vercel.app/history">Companion Historical Lab</a></li>
+      <li>Community record: a few organizer-relayed sessions and hands-on runs, and 0 independent replications. <a href="/community">Community evidence ledger</a>. Participant and survey totals are not used here.</li>
+      <li><a href="https://github.com/DresdenGman/Grid-Extreme-Risk-Toolkit-GERT-">Source repository</a> · <a href="/api/gert/model/evidence">Evidence JSON</a> · <a href="/history">Historical Lab</a></li>
     </ul>
   </div>
 </footer>

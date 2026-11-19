@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live Monitor — Grid Extreme Risk Toolkit (GERT)</title>
+<meta name="description" content="Live status for the GERT deployment: gated prediction, unconnected ERCOT load, and one labeled external weather reading.">
+<meta name="author" content="Dresden Goehner">
+<link rel="canonical" href="https://gertgrid.space/monitor">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<meta property="og:title" content="Live Monitor — Grid Extreme Risk Toolkit (GERT)">
+<meta property="og:description" content="Live status for the GERT deployment: gated prediction, unconnected ERCOT load, and one labeled external weather reading.">
+<meta property="og:image" content="https://gertgrid.space/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Grid Extreme Risk Toolkit (GERT): the v1.4 candidate failed its predeclared calibration gate.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Live Monitor — Grid Extreme Risk Toolkit (GERT)">
+<meta name="twitter:description" content="Live status for the GERT deployment: gated prediction, unconnected ERCOT load, and one labeled external weather reading.">
+<meta name="twitter:image" content="https://gertgrid.space/og.png">
+<link rel="stylesheet" href="/assets/site.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Grid Extreme Risk Toolkit (GERT)","applicationCategory":"ScientificApplication","operatingSystem":"Web","url":"https://gertgrid.space","codeRepository":"https://github.com/DresdenGman/Grid-Extreme-Risk-Toolkit-GERT-","identifier":"https://doi.org/10.5281/zenodo.23982226","description":"Evidence-first research software for ERCOT tail-risk questions. The v1.4 candidate is rejected for production inference.","author":{"@type":"Person","name":"Dresden Goehner"}}</script>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<div class="frame">
+<header class="site"><div class="wrap">
+  <div class="brand">
+    <a class="name" href="/">Grid Extreme Risk Toolkit (GERT)</a>
+    <small>Research record, not a live dispatch tool</small>
+  </div>
+  <nav class="primary" aria-label="Primary"><a href="/">Record</a>
+<a href="/monitor" aria-current="page">Live Monitor</a>
+<a href="/history">Historical Lab</a>
+<a href="/review">Review</a>
+<a href="/benchmark">Benchmarks</a>
+<a href="/events/polar-vortex">Event Replay</a>
+<a href="/scenario">Scenario</a>
+<a href="/briefs">Briefs</a>
+<a href="/community">Community</a>
+<a href="/research">Research</a>
+<a href="/about">About</a>
+<a href="/changelog">Version</a></nav>
+</div></header>
+<main id="content" class="wrap">
+
+<p class="kicker">Live Monitor</p>
+<h1>What is live, and what is not.</h1>
+<p class="lede">This page reads the deployment's own status endpoints and one external weather reading. ERCOT system load and capacity are not connected, so those fields stay unavailable instead of showing a substitute number. The prediction layer is gated: the v1.4 candidate was rejected, and v1.5 is evidence only.</p>
+<p class="banner" data-m="banner" role="status">Checking the status endpoints…</p>
+<div class="grid stats auto">
+  <article class="card"><h3>Model status</h3><p class="stat-value" data-m="model">—</p><p class="note">From GET /api/gert/status.</p></article>
+  <article class="card"><h3>API health</h3><p class="stat-value" data-m="health">—</p><p class="note" data-m="health-note">From GET /api/gert/health.</p></article>
+  <article class="card fail"><h3>Prediction</h3><p class="stat-value bad">UNAVAILABLE</p><p class="note">No validated model is in production. The endpoint stays gated and no simulated forecast is shown.</p></article>
+  <article class="card"><h3>System load</h3><p class="stat-value">UNAVAILABLE</p><p class="note">Official ERCOT load is not connected to this deployment. No substitute number is shown.</p></article>
+  <article class="card"><h3>Available capacity</h3><p class="stat-value">UNAVAILABLE</p><p class="note">No official adequacy feed is connected.</p></article>
+  <article class="card"><h3>Weather · Open-Meteo, Austin, TX</h3><p class="stat-value" data-m="temp">—</p><p class="note">Wind <span data-m="wind">—</span> · Solar <span data-m="solar">—</span> · Reading time <span data-m="weather-time">—</span></p></article>
+</div>
+<p class="row"><button type="button" class="primary" data-m-refresh>Refresh</button></p>
+<p class="note">Weather is an external Open-Meteo reading for the ERCOT region. It is context, not a GERT forecast, and it is never used to fill in load. When a source does not answer, its field says UNAVAILABLE.</p>
+<p><a class="button primary" href="/review">Read why prediction is gated</a> <a class="button" href="/history">Open the Historical Lab</a></p>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p><strong>Grid Extreme Risk Toolkit (GERT)</strong> is decision-support research. It is not an autonomous grid controller, and this deployment does not show live ERCOT load.</p>
+    <ul>
+      <li>Software concept DOI <a href="https://doi.org/10.5281/zenodo.23982226">10.5281/zenodo.23982226</a> (resolves to v1.2.0, published 2026-11-05; version DOI 10.5281/zenodo.23982227).</li>
+      <li>Dataset DOI <a href="https://doi.org/10.5281/zenodo.22975251">10.5281/zenodo.22975251</a> (Historical Lab, 216 public ERCOT hours, published 2026-09-26).</li>
+      <li>Sister benchmark DOI <a href="https://doi.org/10.5281/zenodo.24010850">10.5281/zenodo.24010850</a> (PJM Cold-Spell Calibration Benchmark v1.0.0, published 2026-11-06).</li>
+      <li>Tests: 141 backend and 50 frontend passed in CI on 2026-11-05 (main, commit 796e7683, the v1.2.0 archive). No main-branch run dated 2026-11-09 was found.</li>
+      <li>Community record: a few organizer-relayed sessions and hands-on runs, and 0 independent replications. <a href="/community">Community evidence ledger</a>. Participant and survey totals are not used here.</li>
+      <li><a href="https://github.com/DresdenGman/Grid-Extreme-Risk-Toolkit-GERT-">Source repository</a> · <a href="/api/gert/model/evidence">Evidence JSON</a> · <a href="/history">Historical Lab</a></li>
+    </ul>
+  </div>
+</footer>
+
+</div>
+<script src="/assets/monitor.js" defer></script>
+</body>
+</html>

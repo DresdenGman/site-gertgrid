@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Same meter, two worlds — Grid Extreme Risk Toolkit (GERT)</title>
+<meta name="description" content="A five-minute interactive counterexample: identical electricity readings can hide different unmet demand.">
+<meta name="author" content="Dresden Goehner">
+<link rel="canonical" href="https://gertgrid.space/briefs/same-meter">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<meta property="og:title" content="Same meter, two worlds — Grid Extreme Risk Toolkit (GERT)">
+<meta property="og:description" content="A five-minute interactive counterexample: identical electricity readings can hide different unmet demand.">
+<meta property="og:image" content="https://gertgrid.space/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Grid Extreme Risk Toolkit (GERT): the v1.4 candidate failed its predeclared calibration gate.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Same meter, two worlds — Grid Extreme Risk Toolkit (GERT)">
+<meta name="twitter:description" content="A five-minute interactive counterexample: identical electricity readings can hide different unmet demand.">
+<meta name="twitter:image" content="https://gertgrid.space/og.png">
+<link rel="stylesheet" href="/assets/site.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Grid Extreme Risk Toolkit (GERT)","applicationCategory":"ScientificApplication","operatingSystem":"Web","url":"https://gertgrid.space","codeRepository":"https://github.com/DresdenGman/Grid-Extreme-Risk-Toolkit-GERT-","identifier":"https://doi.org/10.5281/zenodo.23982226","description":"Evidence-first research software for ERCOT tail-risk questions. The v1.4 candidate is rejected for production inference.","author":{"@type":"Person","name":"Dresden Goehner"}}</script>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<div class="frame">
+<header class="site"><div class="wrap">
+  <div class="brand">
+    <a class="name" href="/">Grid Extreme Risk Toolkit (GERT)</a>
+    <small>Research record, not a live dispatch tool</small>
+  </div>
+  <nav class="primary" aria-label="Primary"><a href="/">Record</a>
+<a href="/monitor">Live Monitor</a>
+<a href="/history">Historical Lab</a>
+<a href="/review">Review</a>
+<a href="/benchmark">Benchmarks</a>
+<a href="/events/polar-vortex">Event Replay</a>
+<a href="/scenario">Scenario</a>
+<a href="/briefs">Briefs</a>
+<a href="/community">Community</a>
+<a href="/research">Research</a>
+<a href="/about">About</a>
+<a href="/changelog">Version</a></nav>
+</div></header>
+<main id="content" class="wrap">
+
+<p class="kicker">Grid notes / A five-minute counterexample</p>
+<h1>Same meter. Two worlds.</h1>
+<p class="lede">Can the same falling electricity readings mean two different things? Build a counterexample, then see why a real blackout curve needs careful interpretation.</p>
+<p class="note">No account required · Calculator optional · Invented teaching model, not historical data</p>
+<section data-same-meter>
+  <div class="card">
+    <p class="kicker">01 / What both meters show</p>
+    <h2>The same fall. A different story.</h2>
+    <p class="big-reading">60 GW → 45 GW</p>
+    <p>Each reading is constant over one hour in this invented example. Before looking below: does the fall tell you how much electricity people wanted but did not receive?</p>
+  </div>
+  <div class="grid duo">
+    <article class="card pass">
+      <p class="kicker">World A / Less wanted</p>
+      <h3>Demand falls to 45 GW.</h3>
+      <p>The assumed delivery ceiling stays at 90 GW. All demand in both hours is served.</p>
+      <p class="note">Model unserved energy, two hours</p>
+      <p class="stat-value">0 MWh</p>
+    </article>
+    <article class="card fail">
+      <p class="kicker">World B / Delivery constrained</p>
+      <h3>The ceiling falls to 45 GW.</h3>
+      <p>Change the assumed second-hour demand. The meter cannot show electricity that is not delivered.</p>
+      <label><span class="key">World B: second-hour demand — <span data-sm-out>65 GW</span></span>
+        <input data-sm-demand type="range" min="45000" max="90000" step="5000" value="65000" aria-valuemin="45000" aria-valuemax="90000">
+      </label>
+      <p class="note">45 GW — 90 GW</p>
+      <p class="banner" data-sm-applied role="status">Applied input: 65 GW. The model outputs below have been recalculated.</p>
+      <p class="note">Hour-two meter</p>
+      <p class="stat-value">45 GW</p>
+      <p class="note">Model unserved energy, two hours</p>
+      <p class="stat-value bad" data-sm-unserved>20,000 MWh</p>
+    </article>
+  </div>
+  <details>
+    <summary>Reveal the interpretation after recording your own</summary>
+    <p data-sm-reveal><strong>Same two readings. Different unserved energy.</strong> World A leaves 0 MWh unserved; World B leaves 20,000 MWh unserved under its assumptions. The readings alone do not tell you which world you are in.</p>
+  </details>
+  <section>
+    <p class="kicker">02 / Inspect every assumption</p>
+    <h2>A counterexample you can check.</h2>
+    <p>In this simplified model, delivered power = min(demand, delivery ceiling). Unserved energy = (demand − delivered power) × 1 hour. 1 GW = 1,000 MW. All table inputs are invented assumptions.</p>
+    <div class="scroll" tabindex="0">
+      <table data-sm-table>
+        <caption>Two one-hour intervals; arithmetic in MW and MWh. No historical loss estimate.</caption>
+        <thead><tr><th>World / hour</th><th>Demand (MW)</th><th>Ceiling (MW)</th><th>Delivered (MW)</th><th>Unserved (MWh)</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="row"><button type="button" class="primary" data-sm-download>Download this model snapshot</button></p>
+    <p class="note">This activity does not send your slider setting to GERT or count you as a participant. The JSON stays on your device unless you choose to share it. It records model parameters, not identity, learning gains, or verified participation.</p>
+    <p class="note" data-sm-notice role="status"></p>
+  </section>
+</section>
+<section class="card">
+  <p class="kicker">03 / Take the idea to real data</p>
+  <h2>The mathematical idea: non-identifiability.</h2>
+  <p>Different hidden inputs can produce the same observation. The mapping from demand and delivery ceiling to a meter reading is many-to-one, so the reading alone cannot recover both inputs. This example establishes that logical limitation; it does not establish which mechanism caused any real-world change.</p>
+  <p>Real grids also involve transmission, generation availability, reserves, behavior, and changing conditions. The toy model leaves those out. Its chosen demand values are not estimates of demand during the Texas storm.</p>
+  <p><a class="button primary" href="/briefs/winter-load">Inspect the actual winter-load curve</a></p>
+</section>
+<section>
+  <h2>Host it with one shared screen.</h2>
+  <ol>
+    <li><strong>Minute 1:</strong> Show only the two readings. Ask what they do and do not establish.</li>
+    <li><strong>Minutes 2–3:</strong> Change World B to 70 GW. Have someone compute its two-hour unserved energy. Ask why the meter still reads 45 GW in hour two.</li>
+    <li><strong>Minutes 4–5:</strong> Try 45 GW. Ask why there is now no unserved energy in either world, then name one extra observation needed to distinguish the two worlds.</li>
+  </ol>
+  <details>
+    <summary>Facilitator answer and honest evidence record</summary>
+    <p>At 70 GW, World B has (70,000 − 45,000) MW × 1 hour = 25,000 MWh unserved in hour two, and zero in hour one. World A has zero in both hours. At 45 GW there is no unserved energy in either world.</p>
+    <p>A demand estimate independent of the delivered-load reading, together with information about supply and interruptions, could help distinguish explanations; those inputs bring their own uncertainty.</p>
+    <p>After a real activity, record the date, number present, number who attempted the calculation, and one concrete misconception or critique. Keep host confirmation privately. Attendance and attempted calculations overlap; do not add them as different users. This is a teaching aid, not a learning-effectiveness study or certificate.</p>
+  </details>
+  <p><a href="https://github.com/DresdenGman/Grid-Extreme-Risk-Toolkit-GERT-/blob/main/docs/WORKSHOP.md">Extend it with the existing 20-minute historical-data workshop</a></p>
+</section>
+<section>
+  <h2>Found a confusing sentence or a broken assumption?</h2>
+  <p>A specific counterexample or correction is more useful than a rating. Note your chosen demand, what you expected, and what happened. Downloading a model does not send feedback.</p>
+  <p class="row"><a class="button" href="/review">Choose how to inspect and share a review</a> <a class="button" href="https://github.com/DresdenGman/Grid-Extreme-Risk-Toolkit-GERT-/discussions/3">Leave one public field note</a></p>
+  <p class="note">The review page links to public GitHub issues, which require a GitHub account. Do not post student names, private class records, or personal contact information. Original GERT material uses the repository MIT license. No institutional endorsement is implied.</p>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p><strong>Grid Extreme Risk Toolkit (GERT)</strong> is decision-support research. It is not an autonomous grid controller, and this deployment does not show live ERCOT load.</p>
+    <ul>
+      <li>Software concept DOI <a href="https://doi.org/10.5281/zenodo.23982226">10.5281/zenodo.23982226</a> (resolves to v1.2.0, published 2026-11-05; version DOI 10.5281/zenodo.23982227).</li>
+      <li>Dataset DOI <a href="https://doi.org/10.5281/zenodo.22975251">10.5281/zenodo.22975251</a> (Historical Lab, 216 public ERCOT hours, published 2026-09-26).</li>
+      <li>Sister benchmark DOI <a href="https://doi.org/10.5281/zenodo.24010850">10.5281/zenodo.24010850</a> (PJM Cold-Spell Calibration Benchmark v1.0.0, published 2026-11-06).</li>
+      <li>Tests: 141 backend and 50 frontend passed in CI on 2026-11-05 (main, commit 796e7683, the v1.2.0 archive). No main-branch run dated 2026-11-09 was found.</li>
+      <li>Community record: a few organizer-relayed sessions and hands-on runs, and 0 independent replications. <a href="/community">Community evidence ledger</a>. Participant and survey totals are not used here.</li>
+      <li><a href="https://github.com/DresdenGman/Grid-Extreme-Risk-Toolkit-GERT-">Source repository</a> · <a href="/api/gert/model/evidence">Evidence JSON</a> · <a href="/history">Historical Lab</a></li>
+    </ul>
+  </div>
+</footer>
+
+</div>
+<script src="/assets/same-meter.js" defer></script>
+</body>
+</html>
