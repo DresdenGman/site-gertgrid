@@ -12,7 +12,7 @@ async function loadStatus() {
     const response = await fetch("/api/gert/status");
     if (!response.ok) throw new Error(String(response.status));
     const data = await response.json();
-    setText("model", `${data.model_status} · ${data.model_version}`);
+    setText("model", data.model_status && data.model_version ? `${data.model_status} · ${data.model_version}` : "UNAVAILABLE");
     return true;
   } catch {
     setText("model", "UNAVAILABLE");
@@ -25,8 +25,10 @@ async function loadHealth() {
     const response = await fetch("/api/gert/health");
     if (!response.ok) throw new Error(String(response.status));
     const data = await response.json();
-    setText("health", String(data.status));
-    setText("health-note", `Backend ${data.backend} · API ${data.api_version} · answered ${data.timestamp}`);
+    setText("health", data.status ? String(data.status) : "UNAVAILABLE");
+    setText("health-note", data.backend && data.api_version && data.timestamp
+      ? `Backend ${data.backend} · API ${data.api_version} · answered ${data.timestamp}`
+      : "The health endpoint answered without the expected fields.");
     return true;
   } catch {
     setText("health", "UNAVAILABLE");

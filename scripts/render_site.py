@@ -39,10 +39,12 @@ NAV = [
     ("/changelog", "Version"),
 ]
 
-REPO = "https://github.com/DresdenGman/Grid-Extreme-Risk-Toolkit-GERT-"
+
 
 
 def nav(current: str) -> str:
+    if current.startswith("/briefs/"):
+        current = "/briefs"
     links = []
     for href, label in NAV:
         current_attr = ' aria-current="page"' if href == current else ""
@@ -534,7 +536,7 @@ def monitor() -> str:
   <article class="card"><h3>Weather · Open-Meteo, Austin, TX</h3><p class="stat-value" data-m="temp">—</p><p class="note">Wind <span data-m="wind">—</span> · Solar <span data-m="solar">—</span> · Reading time <span data-m="weather-time">—</span></p></article>
 </div>
 <p class="row"><button type="button" class="primary" data-m-refresh>Refresh</button></p>
-<p class="note">Weather is an external Open-Meteo reading for the ERCOT region. It is context, not a GERT forecast, and it is never used to fill in load. When a source does not answer, its field says UNAVAILABLE.</p>
+<p class="note">Weather is an external Open-Meteo reading for one point, Austin, TX. It is context, not a GERT forecast or a regional average, and it is never used to fill in load. When a source does not answer, its field says UNAVAILABLE.</p>
 <p><a class="button primary" href="/review">Read why prediction is gated</a> <a class="button" href="/history">Open the Historical Lab</a></p>
 """
     return page(
@@ -542,7 +544,7 @@ def monitor() -> str:
         "Live status for the GERT deployment: gated prediction, unconnected ERCOT load, and one labeled external weather reading.",
         "/monitor",
         body,
-        "/assets/monitor.js",
+        "/assets/monitor.js?v=20261119",
     )
 
 
@@ -611,14 +613,14 @@ def brief_winter() -> str:
 <section data-brief>
   <p class="kicker">Self-check</p>
   <h2>Two questions, answered on this device.</h2>
-  <fieldset data-q data-correct="2" data-explain="A fall in the observed series is not a measurement of the electricity people would have used without interruptions. Reliability needs additional evidence.">
+  <fieldset data-q data-qid="interpretation" data-correct="2" data-explain="A fall in the observed series is not a measurement of the electricity people would have used without interruptions. Reliability needs additional evidence.">
     <legend>The recorded load falls. What can this curve alone establish?</legend>
     <label><input type="radio" name="q1" value="0"> The grid became safer.</label>
     <label><input type="radio" name="q1" value="1"> Electricity demand disappeared.</label>
     <label><input type="radio" name="q1" value="2"> Recorded load fell; unmet demand and reliability remain unresolved.</label>
     <p class="note" data-q-feedback hidden></p>
   </fieldset>
-  <fieldset data-q data-correct="0" data-explain="max(0, 65,000 − 60,000) MW × 1 hour = 5,000 MWh. It is a hypothetical calculation, not a measured outage or a probability-weighted reliability metric.">
+  <fieldset data-q data-qid="gap" data-correct="0" data-explain="max(0, 65,000 − 60,000) MW × 1 hour = 5,000 MWh. It is a hypothetical calculation, not a measured outage or a probability-weighted reliability metric.">
     <legend>In a separate hypothetical one-hour example, load is 65,000 MW and assumed capacity is 60,000 MW. What is the arithmetic gap energy?</legend>
     <label><input type="radio" name="q2" value="0"> 5,000 MWh, under those assumptions.</label>
     <label><input type="radio" name="q2" value="1"> 5,000 MW of proven outage savings.</label>
@@ -660,7 +662,7 @@ def brief_winter() -> str:
         "A short source-linked exercise about observed load, unmet demand, and the February 2021 Texas winter storm.",
         "/briefs/winter-load",
         body,
-        "/assets/brief.js",
+        "/assets/brief.js?v=20261119",
     )
 
 
@@ -763,7 +765,7 @@ def community() -> str:
         ("4", "organizer-forwarded reports", "Stored privately with source and method limits."),
         ("2", "hands-on core completions", "Self-reported: one desktop and one iPhone."),
         ("1", "script-assisted walkthrough", "Tracked separately from hands-on use."),
-        ("2", "feedback-linked changes", "Included in this release and covered by automated checks."),
+        ("2", "feedback-linked changes", "Included in this release; independent retest pending."),
         ("0", "independent retests", "A retest is counted only after someone tries the changed interaction."),
     ]
     cards = "\n".join(
@@ -855,7 +857,9 @@ def md_lite(text: str) -> str:
             continue
         if line.startswith("## "):
             flush_para(); close_list()
-            title = line[3:].strip().strip("[]")
+            title = line[3:].strip()
+            if title.startswith("[") and "]" in title:
+                title = title[1:].replace("]", "", 1).strip()
             out.append(f"<h2>{inline(title)}</h2>")
         elif line.startswith("### "):
             flush_para(); close_list()

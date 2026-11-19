@@ -37,7 +37,7 @@
 <a href="/benchmark">Benchmarks</a>
 <a href="/events/polar-vortex">Event Replay</a>
 <a href="/scenario">Scenario</a>
-<a href="/briefs">Briefs</a>
+<a href="/briefs" aria-current="page">Briefs</a>
 <a href="/community">Community</a>
 <a href="/research">Research</a>
 <a href="/about">About</a>
@@ -76,14 +76,14 @@
 <section data-brief>
   <p class="kicker">Self-check</p>
   <h2>Two questions, answered on this device.</h2>
-  <fieldset data-q data-correct="2" data-explain="A fall in the observed series is not a measurement of the electricity people would have used without interruptions. Reliability needs additional evidence.">
+  <fieldset data-q data-qid="interpretation" data-correct="2" data-explain="A fall in the observed series is not a measurement of the electricity people would have used without interruptions. Reliability needs additional evidence.">
     <legend>The recorded load falls. What can this curve alone establish?</legend>
     <label><input type="radio" name="q1" value="0"> The grid became safer.</label>
     <label><input type="radio" name="q1" value="1"> Electricity demand disappeared.</label>
     <label><input type="radio" name="q1" value="2"> Recorded load fell; unmet demand and reliability remain unresolved.</label>
     <p class="note" data-q-feedback hidden></p>
   </fieldset>
-  <fieldset data-q data-correct="0" data-explain="max(0, 65,000 − 60,000) MW × 1 hour = 5,000 MWh. It is a hypothetical calculation, not a measured outage or a probability-weighted reliability metric.">
+  <fieldset data-q data-qid="gap" data-correct="0" data-explain="max(0, 65,000 − 60,000) MW × 1 hour = 5,000 MWh. It is a hypothetical calculation, not a measured outage or a probability-weighted reliability metric.">
     <legend>In a separate hypothetical one-hour example, load is 65,000 MW and assumed capacity is 60,000 MW. What is the arithmetic gap energy?</legend>
     <label><input type="radio" name="q2" value="0"> 5,000 MWh, under those assumptions.</label>
     <label><input type="radio" name="q2" value="1"> 5,000 MW of proven outage savings.</label>
@@ -208,6 +208,6 @@
 </footer>
 
 </div>
-<script src="/assets/brief.js" defer></script>
+<script src="/assets/brief.js?v=20261119" defer></script>
 </body>
 </html>

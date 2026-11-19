@@ -183,7 +183,7 @@ async function initLab(root) {
     }
     if (params.has("capacity")) {
       const capParam = Number(params.get("capacity"));
-      if (Number.isFinite(capParam) && capParam > 0) capacityInput.value = String(capParam);
+      if (Number.isFinite(capParam) && capParam >= 1000 && capParam <= 100000) capacityInput.value = String(capParam);
     }
     if (params.has("reduction")) {
       const redParam = Number(params.get("reduction"));
